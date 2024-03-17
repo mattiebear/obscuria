@@ -17,6 +17,10 @@ module.exports = {
         brand: "#FD4F00",
       }
     },
+    fontFamily: {
+      sans: ['Gotu', 'sans-serif'],
+      serif: ['Radley', 'serif'],
+    },
   },
   plugins: [
     require("@tailwindcss/forms"),
