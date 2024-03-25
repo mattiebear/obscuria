@@ -6,21 +6,11 @@ defmodule ObscuriaWeb.PuzzlesLive.Index do
   alias Obscuria.Puzzles.{Puzzle, Riddle}
 
   def mount(_params, _session, socket) do
-    params = %{
-      "riddles" => [
-        %{
-          "question" => "",
-          "answer" => ""
-        }
-      ]
-    }
+    puzzle = %Puzzle{riddles: [%Riddle{}]}
+    changeset = Puzzles.change_puzzle(puzzle)
+    form = to_form(changeset)
 
-    puzzle =
-      %Puzzle{}
-      |> Puzzles.change_puzzle(params)
-      |> to_form()
-
-    {:ok, assign(socket, params: params, puzzle: puzzle)}
+    {:ok, assign(socket, form: form)}
   end
 
   def handle_params(_params, _url, socket) do
@@ -28,28 +18,23 @@ defmodule ObscuriaWeb.PuzzlesLive.Index do
   end
 
   def handle_event("validate", %{"puzzle" => params}, socket) do
-    puzzle =
+    form =
       %Puzzle{}
       |> Puzzles.change_puzzle(params)
       |> Map.put(:action, "validate")
       |> to_form()
 
-    dbg params
-
-    {:noreply, assign(socket, params: params, puzzle: puzzle)}
+    {:noreply, assign(socket, form: form)}
   end
 
-  def handle_event("add", params, socket) do
-    dbg params
+  def handle_event("add-riddle", _params, socket) do
+    socket =
+      update(socket, :form, fn %{source: changeset} ->
+        existing = Changeset.get_embed(changeset, :riddles)
+        changeset = Changeset.put_embed(changeset, :riddles, existing ++ [%Riddle{}])
+        to_form(changeset)
+      end)
 
-    params = Map.update(socket.assigns.params, "riddles", [%{"question" => "", "answer" => ""}], &List.insert_at(&1, -1, %{"question" => "", "answer" => ""}))
-
-    puzzle =
-      %Puzzle{}
-      |> Puzzles.change_puzzle(params)
-      |> Map.put(:action, "validate")
-      |> to_form()
-
-    {:noreply, assign(socket, params: params, puzzle: puzzle)}
+    {:noreply, socket}
   end
 end

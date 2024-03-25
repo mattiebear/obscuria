@@ -1,15 +1,15 @@
 <h1 class="text-[3rem] text-zinc-300 font-serif text-center">Create a Puzzle</h1>
 
-<.form for={@puzzle} phx-change="validate" class="flex flex-col gap-y-4">
-  <.input field={@puzzle[:name]} label="Name" />
+<.form for={@form} phx-change="validate" class="flex flex-col gap-y-4">
+  <.input field={@form[:name]} label="Name" />
 
-  <.inputs_for :let={riddle} field={@puzzle[:riddles]}>
-    <div class="flex flex-col gap-y-2">
+  <fieldset class="flex flex-col gap-y-2">
+    <.inputs_for :let={riddle} field={@form[:riddles]}>
       <h2>Riddle <%= riddle.index + 1 %></h2>
       <.input field={riddle[:question]} label="Question" />
       <.input field={riddle[:answer]} label="Answer" />
-    </div>
-  </.inputs_for>
+    </.inputs_for>
 
-  <.button type="button" phx-click="add" phx-value-test="nice">Add Riddle</.button>
+    <.button type="button" phx-click="add-riddle" phx-value-test="nice">Add Riddle</.button>
+  </fieldset>
 </.form>
