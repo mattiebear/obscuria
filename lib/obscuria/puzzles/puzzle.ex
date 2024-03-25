@@ -4,7 +4,8 @@ defmodule Obscuria.Puzzles.Puzzle do
 
   schema "puzzles" do
     field :name, :string
-    field :riddles, {:array, :map}
+
+    embeds_many :riddles, Obscuria.Puzzles.Riddle
 
     timestamps(type: :utc_datetime)
   end
@@ -12,7 +13,8 @@ defmodule Obscuria.Puzzles.Puzzle do
   @doc false
   def changeset(puzzle, attrs) do
     puzzle
-    |> cast(attrs, [:name, :riddles])
-    |> validate_required([:name, :riddles])
+    |> cast(attrs, [:name])
+    |> cast_embed(:riddles, required: true)
+    |> validate_required([:name])
   end
 end
