@@ -8,6 +8,8 @@
       <h2>Riddle <%= riddle.index + 1 %></h2>
       <.input field={riddle[:question]} label="Question" />
       <.input field={riddle[:answer]} label="Answer" />
+
+      <.button type="button" phx-click="remove-riddle" phx-value-index={riddle.index}>Remove Riddle</.button>
     </.inputs_for>
 
     <.button type="button" phx-click="add-riddle" phx-value-test="nice">Add Riddle</.button>

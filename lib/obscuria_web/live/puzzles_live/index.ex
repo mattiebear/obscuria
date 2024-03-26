@@ -37,4 +37,15 @@ defmodule ObscuriaWeb.PuzzlesLive.Index do
 
     {:noreply, socket}
   end
+
+  def handle_event("remove-riddle", %{"index" => index}, socket) do
+    socket =
+      update(socket, :form, fn %{source: changeset} ->
+        existing = Changeset.get_embed(changeset, :riddles)
+        changeset = Changeset.put_embed(changeset, :riddles, List.delete_at(existing, String.to_integer(index)))
+        to_form(changeset)
+      end)
+
+    {:noreply, socket}
+  end
 end
