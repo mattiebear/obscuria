@@ -27,6 +27,18 @@ defmodule ObscuriaWeb.PuzzlesLive.Index do
     {:noreply, assign(socket, form: form)}
   end
 
+  def handle_event("save", %{"puzzle" => params}, socket) do
+    case Puzzles.create_puzzle(params) do
+      {:ok, _puzzle} ->
+        {:noreply, socket
+          |> put_flash(:info, "Puzzle created successfully.")
+          |> push_navigate(to: ~p"/")}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, form: to_form(changeset))}
+    end
+  end
+
   def handle_event("add-riddle", _params, socket) do
     socket =
       update(socket, :form, fn %{source: changeset} ->
