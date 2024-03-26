@@ -1,17 +1,18 @@
 <h1 class="text-[3rem] text-zinc-300 font-serif text-center">Create a Puzzle</h1>
 
-<.form for={@form} phx-change="validate" class="flex flex-col gap-y-4">
+<.form for={@form} phx-change="validate" phx-submit="save" class="flex flex-col gap-y-4">
   <.input field={@form[:name]} label="Name" />
 
   <fieldset class="flex flex-col gap-y-2">
     <.inputs_for :let={riddle} field={@form[:riddles]}>
-      <h2>Riddle <%= riddle.index + 1 %></h2>
-      <.input field={riddle[:question]} label="Question" />
+      <h2 class="text-xl text-zinc-300">Riddle <%= riddle.index + 1 %></h2>
+      <.input type="textarea" field={riddle[:question]} label="Question" />
       <.input field={riddle[:answer]} label="Answer" />
 
       <.button type="button" phx-click="remove-riddle" phx-value-index={riddle.index}>Remove Riddle</.button>
     </.inputs_for>
 
     <.button type="button" phx-click="add-riddle" phx-value-test="nice">Add Riddle</.button>
+    <.button type="submit" phx-disable-with="Scribing...">Save</.button>
   </fieldset>
 </.form>
