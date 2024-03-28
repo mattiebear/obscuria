@@ -8,6 +8,8 @@ defmodule Obscuria.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
 
+    has_many :puzzles, Obscuria.Puzzles.Puzzle
+
     timestamps(type: :utc_datetime)
   end
 

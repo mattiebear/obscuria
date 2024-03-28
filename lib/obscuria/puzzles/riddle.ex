@@ -6,6 +6,7 @@ defmodule Obscuria.Puzzles.Riddle do
     field :question, :string
     field :answer, :string
 
+    belongs_to :user, Obscuria.Accounts.User
     belongs_to :puzzle, Obscuria.Puzzles.Puzzle
 
     timestamps(type: :utc_datetime)

@@ -5,6 +5,7 @@ defmodule Obscuria.Repo.Migrations.CreatePuzzles do
     create table(:puzzles) do
       add :name, :string
       add :riddles, {:array, :map}
+      add :user_id, references(:users, on_delete: :delete_all)
 
       timestamps(type: :utc_datetime)
     end
