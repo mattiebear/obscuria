@@ -4,6 +4,7 @@ defmodule Obscuria.Puzzles.Puzzle do
 
   schema "puzzles" do
     field :name, :string
+    field :user_id, :id
 
     embeds_many :riddles, Obscuria.Puzzles.Riddle
 
