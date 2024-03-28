@@ -1,4 +1,4 @@
-defmodule ObscuriaWeb.PuzzlesLive.Index do
+defmodule ObscuriaWeb.PuzzleLive.Index do
   use ObscuriaWeb, :live_view
 
   alias Ecto.Changeset
