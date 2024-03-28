@@ -69,7 +69,7 @@ defmodule ObscuriaWeb.Router do
       live "/users/settings", AuthLive.UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", AuthLive.UserSettingsLive, :confirm_email
 
-      live "/scribe", PuzzleLive.Index, :index
+      live "/puzzles/new", PuzzleLive.New, :new
     end
 
     resources "/puzzles", PuzzleController, only: [:index]

@@ -32,6 +32,7 @@ defmodule ObscuriaWeb.UserAuth do
     conn
     |> renew_session()
     |> put_token_in_session(token)
+    |> put_user_id_in_session(user.id)
     |> maybe_write_remember_me_cookie(token, params)
     |> redirect(to: user_return_to || signed_in_path(conn))
   end
@@ -215,6 +216,10 @@ defmodule ObscuriaWeb.UserAuth do
     conn
     |> put_session(:user_token, token)
     |> put_session(:live_socket_id, "users_sessions:#{Base.url_encode64(token)}")
+  end
+
+  defp put_user_id_in_session(conn, id) do
+    conn |> put_session(:user_id, id)
   end
 
   defp maybe_store_return_to(%{method: "GET"} = conn) do

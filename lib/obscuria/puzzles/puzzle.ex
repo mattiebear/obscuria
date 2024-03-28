@@ -15,8 +15,8 @@ defmodule Obscuria.Puzzles.Puzzle do
   @doc false
   def changeset(puzzle, attrs) do
     puzzle
-    |> cast(attrs, [:name])
+    |> cast(attrs, [:name, :user_id])
     |> cast_embed(:riddles, required: true)
-    |> validate_required([:name])
+    |> validate_required([:name, :user_id])
   end
 end

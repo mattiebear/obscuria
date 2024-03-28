@@ -1,1 +1,8 @@
 <h1>Puzzles</h1>
+
+<.table id="puzzles" rows={@puzzles}>
+  <:col :let={puzzle} label="id"><%= puzzle.id %></:col>
+  <:col :let={puzzle} label="name"><%= puzzle.name %></:col>
+</.table>
+
+<.link href="/puzzles/new">New Puzzle</.link>

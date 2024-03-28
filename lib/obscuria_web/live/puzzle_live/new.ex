@@ -1,16 +1,16 @@
-defmodule ObscuriaWeb.PuzzleLive.Index do
+defmodule ObscuriaWeb.PuzzleLive.New do
   use ObscuriaWeb, :live_view
 
   alias Ecto.Changeset
   alias Obscuria.Puzzles
   alias Obscuria.Puzzles.{Puzzle, Riddle}
 
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
     puzzle = %Puzzle{riddles: [%Riddle{}]}
     changeset = Puzzles.change_puzzle(puzzle)
     form = to_form(changeset)
 
-    {:ok, assign(socket, form: form)}
+    {:ok, assign(socket, form: form, user_id: session["user_id"])}
   end
 
   def handle_params(_params, _url, socket) do
@@ -28,11 +28,13 @@ defmodule ObscuriaWeb.PuzzleLive.Index do
   end
 
   def handle_event("save", %{"puzzle" => params}, socket) do
+    params = Map.put(params, "user_id", socket.assigns.user_id)
+
     case Puzzles.create_puzzle(params) do
       {:ok, _puzzle} ->
         {:noreply, socket
           |> put_flash(:info, "Puzzle created successfully.")
-          |> push_navigate(to: ~p"/")}
+          |> push_navigate(to: ~p"/puzzles")}
 
       {:error, changeset} ->
         {:noreply, assign(socket, form: to_form(changeset))}

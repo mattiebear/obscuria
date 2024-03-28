@@ -9,16 +9,18 @@ defmodule Obscuria.Puzzles do
   alias Obscuria.Puzzles.Puzzle
 
   @doc """
-  Returns the list of puzzles.
+  Returns the list of puzzles owned by a user.
 
   ## Examples
 
-      iex> list_puzzles()
+      iex> list_puzzles_by_user_id(1)
       [%Puzzle{}, ...]
 
   """
-  def list_puzzles do
-    Repo.all(Puzzle)
+  def list_puzzles_by_user_id(user_id) do
+    query = from p in Puzzle, where: p.user_id == ^user_id
+
+    Repo.all(query)
   end
 
   @doc """
