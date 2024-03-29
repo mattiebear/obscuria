@@ -3,6 +3,7 @@
 <.table id="puzzles" rows={@puzzles}>
   <:col :let={puzzle} label="id"><%= puzzle.id %></:col>
   <:col :let={puzzle} label="name"><%= puzzle.name %></:col>
+  <:col :let={puzzle} label="view"><.link href={~p"/puzzles/#{puzzle.id}"}>View Puzzle</.link></:col>
 </.table>
 
 <.link href="/puzzles/new">New Puzzle</.link>

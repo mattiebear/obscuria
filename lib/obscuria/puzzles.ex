@@ -8,98 +8,34 @@ defmodule Obscuria.Puzzles do
 
   alias Obscuria.Puzzles.Puzzle
 
-  @doc """
-  Returns the list of puzzles owned by a user.
-
-  ## Examples
-
-      iex> list_puzzles_by_user_id(1)
-      [%Puzzle{}, ...]
-
-  """
   def list_puzzles_by_user_id(user_id) do
     query = from p in Puzzle, where: p.user_id == ^user_id
 
     Repo.all(query)
   end
 
-  @doc """
-  Gets a single puzzle.
+  def get_puzzle_by_user_id!(id, user_id) do
+    query = from p in Puzzle, where: p.id == ^id and p.user_id == ^user_id
 
-  Raises `Ecto.NoResultsError` if the Puzzle does not exist.
+    Repo.one(query)
+  end
 
-  ## Examples
-
-      iex> get_puzzle!(123)
-      %Puzzle{}
-
-      iex> get_puzzle!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_puzzle!(id), do: Repo.get!(Puzzle, id)
-
-  @doc """
-  Creates a puzzle.
-
-  ## Examples
-
-      iex> create_puzzle(%{field: value})
-      {:ok, %Puzzle{}}
-
-      iex> create_puzzle(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_puzzle(attrs \\ %{}) do
     %Puzzle{}
     |> Puzzle.changeset(attrs)
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a puzzle.
-
-  ## Examples
-
-      iex> update_puzzle(puzzle, %{field: new_value})
-      {:ok, %Puzzle{}}
-
-      iex> update_puzzle(puzzle, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def update_puzzle(%Puzzle{} = puzzle, attrs) do
     puzzle
     |> Puzzle.changeset(attrs)
     |> Repo.update()
   end
 
-  @doc """
-  Deletes a puzzle.
-
-  ## Examples
-
-      iex> delete_puzzle(puzzle)
-      {:ok, %Puzzle{}}
-
-      iex> delete_puzzle(puzzle)
-      {:error, %Ecto.Changeset{}}
-
-  """
   def delete_puzzle(%Puzzle{} = puzzle) do
     Repo.delete(puzzle)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking puzzle changes.
-
-  ## Examples
-
-      iex> change_puzzle(puzzle)
-      %Ecto.Changeset{data: %Puzzle{}}
-
-  """
   def change_puzzle(%Puzzle{} = puzzle, attrs \\ %{}) do
     Puzzle.changeset(puzzle, attrs)
   end
